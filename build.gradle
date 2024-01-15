@@ -1,0 +1,17 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+
+        mavenCentral()
+    }
+    dependencies {
+
+        classpath 'io.freefair.gradle:lombok-plugin:6.3.0' // Use the latest version
+    }
+}
+
+plugins {
+id 'com.android.application' version '8.1.0' apply false
+}
+
