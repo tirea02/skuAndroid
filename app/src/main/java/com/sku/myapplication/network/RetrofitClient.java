@@ -1,9 +1,14 @@
 package com.sku.myapplication.network;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.sku.myapplication.utils.LocalDateTimeDeserializer;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import java.time.LocalDateTime;
 
 public class RetrofitClient {
     private static Retrofit retrofit;
@@ -19,13 +24,19 @@ public class RetrofitClient {
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
             httpClient.addInterceptor(logging);
 
-            // Build Retrofit instance
+            // Initialize Gson with LocalDateTimeDeserializer
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer())
+                    .create();
+
+            // Build Retrofit instance using the custom Gson instance
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson)) // Use the custom Gson instance here
                     .client(httpClient.build())
                     .build();
         }
         return retrofit;
     }
+
 }
