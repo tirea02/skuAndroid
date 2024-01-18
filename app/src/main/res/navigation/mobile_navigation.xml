@@ -14,6 +14,11 @@
                     android:name="userId"
                     app:argType="string" />
     </fragment>
+    <fragment
+            android:id="@+id/postDetailFragment"
+            android:name="com.sku.myapplication.ui.gallery.PostDetailFragment"
+            android:label="Post Details"
+            tools:layout="@layout/fragment_post_detail" />
 
 
 

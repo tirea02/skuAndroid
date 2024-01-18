@@ -13,9 +13,20 @@ import java.util.List;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHolder> {
     private List<Post> posts;
+    private OnItemClickListener listener;
+
+
 
     public PostsAdapter(List<Post> posts) {
         this.posts = posts;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Post post);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -30,6 +41,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
         Log.d("PostsAdapter", "Binding post: " + post.getTitle() + " at position: " + position);
         holder.titleTextView.setText(post.getTitle());
         holder.userIdTextView.setText(post.getUserId());
+
+        holder.itemView.setOnClickListener(view -> {
+            if (listener != null) {
+                listener.onItemClick(post);
+            }
+        });
+
         // Set other post details
     }
 

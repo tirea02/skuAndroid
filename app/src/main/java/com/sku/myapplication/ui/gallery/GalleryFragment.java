@@ -7,7 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import com.sku.myapplication.R;
 import com.sku.myapplication.adapter.PostsAdapter;
 import com.sku.myapplication.databinding.FragmentGalleryBinding;
 import com.sku.myapplication.model.Post;
@@ -35,6 +38,13 @@ public class GalleryFragment extends Fragment {
         // Initialize the adapter with an empty list
         postsAdapter = new PostsAdapter(new ArrayList<>());
         binding.postsRecyclerView.setAdapter(postsAdapter);
+
+        postsAdapter.setOnItemClickListener(post -> {
+            NavController navController = NavHostFragment.findNavController(this);
+            Bundle bundle = new Bundle();
+            bundle.putInt("postId", post.getId());
+            navController.navigate(R.id.postDetailFragment, bundle);
+        });
 
 
         // Fetch posts
